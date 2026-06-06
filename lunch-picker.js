@@ -40,7 +40,6 @@ User Stories:
         If there are elements in the array, logs the string Menu items: [Lunch Item], [Lunch Item]... to the console, where each [Lunch item] is one of the elements in the array, in order.
         If the array is empty, logs the string "The menu is empty." to the console.
 
-
 */
 
 const lunches = [];
