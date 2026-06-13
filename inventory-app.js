@@ -1,74 +1,41 @@
-const inventory = [{ name: "FLOUR", quantity: 5 }];
+// const inventory = [{ name: "flour", quantity: 1 }];
+const inventory = [];
 
 function findProductIndex(name) {
   let productName = name.toLowerCase();
 
-  if (inventory.length == 0) {
-    return -1;
-  }
-
   for (let i = 0; i < inventory.length; i++) {
-    console.log(i);
-
-    if (inventory[i] === name.toLowerCase()) {
+    if (inventory[i].name == productName) {
       return i;
-    } else {
-      return -1;
     }
   }
+
+  return -1;
 }
+
 
 function addProduct(productObj) {
-  let productsArr = [];
+  const itemName = productObj["name"].toLowerCase();
+  const quantity = productObj["quantity"]
+  const index = findProductIndex(itemName);
 
-  // check if inventory is equal to empty array
-
-  if(inventory.length !== 0) {
-    for(let i = 0; i < inventory.length; i++){
-      const product = inventory[i];
-      console.log(productObj["name"].toLowerCase())
-
-      if( 
-        productObj["name"].toLowerCase() === 
-        product["name"].toLowerCase()) 
-      {
-        console.log("match")
-      }
-
-    }
-
-   
-  } else {
-    const { name, quantity } = productObj;
-
-     productsArr.push({ 
-      name: name.toLowerCase(),
-      quantity
+  if (index === -1) {
+    inventory.push({
+      name: itemName,
+      quantity: quantity
     });
+
+    console.log(itemName + " added to inventory");
+  } else {
+    inventory[index]["quantity"] += quantity;
+    console.log(itemName + " quantity updated");
   }
-
-
-  // for (let i = 0; i <= inventory.length; i++) {
-  
-  //   if(inventory[i].hasOwnProperty("name")){
-
-  //   }
-
-  //   if (inventory[i] !== productObj) {
-  //     const { name, quantity } = productObj;
-
-  //     productsArr.push({
-  //       name: name.toLowerCase(),
-  //       quantity: quantity
-  //     });
-
-  //   } else {
-  //     inventory[i].quantity = productObj.quantity;
-  //   }
-  // }
-
-  console.log(productsArr);
 }
 
-// console.log(findProductIndex("flour"));
-console.log(addProduct({ name: "FLOUR", quantity: 5 }))
+
+const productIndex = findProductIndex("flour");
+console.log("ProductIndex: ", productIndex)
+
+const productAdded = addProduct({ name: "FLOUR", quantity: 5 });
+console.log(productAdded);
+console.log("inventory: ", inventory);
