@@ -32,10 +32,32 @@ function addProduct(productObj) {
   }
 }
 
+function removeProduct(name, quantity) {
+  const itemName = name.toLowerCase();
+  const foundIndex = findProductIndex(itemName);
+  const itemObject = inventory[foundIndex];
+
+  if (foundIndex === -1) {
+    console.log(itemName + " not found");
+  } else {
+
+    if(itemObject["quantity"] < quantity) {
+      console.log(`Not enough ${itemName} available, remaining pieces: ${itemObject["quantity"]}`);
+      return
+    }
+
+    itemObject["quantity"] -= quantity;
+
+    if(itemObject["quantity"] <= 0) {
+      inventory.splice(foundIndex, 1);
+    } 
+
+    console.log("Remaining " + itemName + " pieces: " + itemObject["quantity"]);
+  }
+}
 
 const productIndex = findProductIndex("flour");
-console.log("ProductIndex: ", productIndex)
-
-const productAdded = addProduct({ name: "FLOUR", quantity: 5 });
-console.log(productAdded);
+const productAdded = addProduct({name: "flour", quantity: 5});
+const productRemove = removeProduct("FLOUR", 10);
+console.log(productRemove);
 console.log("inventory: ", inventory);
