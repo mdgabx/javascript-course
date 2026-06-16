@@ -24,3 +24,37 @@ User Stories:
 
 */
 
+const books = [
+  {
+    title: "The Great Gatsby",
+    authorName: "F. Scott Fitzgerald",
+    releaseYear: 1925
+  },
+  {
+    title: "To Kill a Mockingbird",
+    authorName: "Harper Lee",
+    releaseYear: 1960
+  },
+  {
+    title: "1984",
+    authorName: "George Orwell",
+    releaseYear: 1949
+  }
+];
+
+function sortByYear(a, b) {
+  if(a.releaseYear < b.releaseYear) {
+    return -1;
+  }
+
+  if(a.releaseYear == b.releaseYear) {
+    return 0;
+  }
+
+  if(a.releaseYear > b.releaseYear) {
+    return 1;
+  }
+}
+
+const filteredBooks = books.filter((book) => book.releaseYear <= 1950)
+console.log(filteredBooks.sort(sortByYear))
