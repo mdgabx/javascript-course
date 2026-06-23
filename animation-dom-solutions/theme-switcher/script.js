@@ -5,7 +5,7 @@ const themes = [
 
 const themeSwitcherBtn = document.getElementById("theme-switcher-button");
 const themeList = document.getElementById("theme-dropdown");
-const message = document.querySelector("[aria-live='polite']")
+const message = document.querySelector("[aria-live='polite']");
 
 themeSwitcherBtn.addEventListener("click", () => {
   if (themeList.hidden) {
@@ -15,19 +15,20 @@ themeSwitcherBtn.addEventListener("click", () => {
     themeList.hidden = true;
     themeSwitcherBtn.setAttribute("aria-expanded", "false");
   }
-})
-
+});
 
 themes.forEach((theme) => {
   const themeEl = document.getElementById(`theme-${theme.name}`);
 
   themeEl.addEventListener("click", () => {
-
     themes.forEach((t) => {
       document.body.classList.remove(`theme-${t.name}`);
     });
-    
+
     document.body.classList.add(`theme-${theme.name}`);
     message.textContent = theme.message;
-  })
-})
+
+    themeList.hidden = true;
+    themeSwitcherBtn.setAttribute("aria-expanded", "false");
+  });
+});
