@@ -26,7 +26,6 @@ const testRegex = (string, regex) => {
   const regexStr = new RegExp(regex, flags);
   const result = string.match(regexStr);
 
-  console.log(result);
   if (result) {
     stringToTest.innerHTML = string.replace(regexStr, (match) => `<span class="highlight">${match}</span>`);
     testResult.textContent = result.join(", ");
