@@ -1,7 +1,6 @@
 const currentDate = new Date();
 const currentDateFormat = `Current Date and Time: ${currentDate}`;
 
-console.log(currentDateFormat)
 function formatDateMMDDYYYY(date) {
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -11,8 +10,10 @@ function formatDateMMDDYYYY(date) {
   return dateFormatted;
 }
 
-console.log(formatDateMMDDYYYY(currentDate))
-
-function formatDateLong () {
+function formatDateLong (date) {
   
 }
+
+console.log(currentDateFormat)
+console.log(formatDateMMDDYYYY(currentDate))
+console.log(formatDateLong(currentDate))
