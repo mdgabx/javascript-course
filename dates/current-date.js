@@ -11,7 +11,26 @@ function formatDateMMDDYYYY(date) {
 }
 
 function formatDateLong (date) {
-  
+  const month = date.getMonth();
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  const months = [
+    "January", 
+    "February", 
+    "March", 
+    "April", 
+    "May", 
+    "June", 
+    "July", 
+    "August", 
+    "September", 
+    "October", 
+    "November", 
+    "December"
+  ];
+
+ return `Formatted Date (Month Day, Year): ${months[month]} ${day}, ${year}` 
 }
 
 console.log(currentDateFormat)
