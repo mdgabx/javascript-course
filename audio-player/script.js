@@ -98,7 +98,32 @@ const playSong = id => {
   audio.play();
 }
 
+const pauseSong = () => {
+  userData.songCurrentTime = audio.currentTime;
+  playButton.classList.remove("playing");
+  audio.pause();
+}
 
+const getCurrentSongIndex = () => userData.songs.indexOf(userData.currentSong);
+
+const getNextSong = () => userData.songs[getCurrentSongIndex() + 1];
+
+
+
+const playNextSong = () => {
+  if (userData.currentSong === null) {
+    playSong(userData.songs[0].id);
+    return;
+  }
+  const nextSong = getNextSong();
+  if (nextSong) {
+    playSong(nextSong.id);
+  } else {
+    userData.currentSong = null;
+    userData.songCurrentTime = 0;
+    pauseSong();
+  }
+}
 
 playButton.addEventListener("click", () => {
   if (userData.currentSong === null) {
@@ -117,3 +142,7 @@ songs.forEach((song) => {
     playSong(Number(id));
   })
 })
+
+pauseButton.addEventListener("click", pauseSong);
+
+nextButton.addEventListener("click", playNextSong);
