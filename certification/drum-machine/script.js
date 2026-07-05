@@ -18,16 +18,20 @@ const playBeatViaKeyPress = (e) => {
   const key = e.key.toUpperCase();
   const audio = document.getElementById(key);
 
-  if (audio) {
-    playBeat(audio);
+ const playBeatViaKeyPress = (e) => {
+  const key = e.key.toUpperCase();
+  const audio = document.getElementById(key);
 
-    // Optional: highlight the pad briefly
-    // const pad = audio.parentElement;
-    // pad.classList.add("active");
-    // setTimeout(() => pad.classList.remove("active"), 150);
+  if (audio) {
+    audio.currentTime = 0; // reset before play
+    audio.play();
+
+    const display = document.getElementById("display");
+    display.textContent = `Playing: ${audio.id}`;
   } else {
     console.log("Not a drum pad key");
   }
+};
 };
 
 document.addEventListener("keydown", playBeatViaKeyPress);
