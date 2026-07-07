@@ -43,6 +43,7 @@ catalog.set(imperialGem, { small: 19, medium: 35, large: 28 });
 catalog.set(royalCrown, { small: 40, medium: 22, large: 9 });
 
 const sellPlants = (plant, size, potsNo) => {
+    if (!catalog.has(plant)) return "Item not found.";
     const name = `${plant.scientificName} '${plant.cultivar}'`
     const pots = catalog.get(plant);
     if (pots[size] - potsNo < 0) {
@@ -53,8 +54,13 @@ const sellPlants = (plant, size, potsNo) => {
 }
 
 const removePlant = plant => catalog.delete(plant);
-console.log(removePlant("ballerina"));
 
-console.log(sellPlants(ballerina, "small", 10));
-
-console.log(catalog)
+const displayCatalog = () => {
+    let catalogString = "";
+    catalog.forEach((val, key) => {
+        catalogString += `${key.scientificName} '${key.cultivar}': ${val.small} S, ${val.medium} M, ${val.large} L
+`
+    })
+    return catalogString
+}
+console.log(displayCatalog())
