@@ -63,4 +63,20 @@ const displayCatalog = () => {
     })
     return catalogString
 }
-console.log(displayCatalog())
+
+const displayPlantsSet = () => {
+    const catalogSet = new Set();
+    catalogSet.add(ballerina);
+    catalogSet.add(ballerina);
+    catalogSet.add(prettyPolly);
+    const commonName = [];
+
+    catalog.forEach((val, key) => {
+    commonName.push(key.commonName); 
+    })
+
+    return new Set(commonName);
+};
+
+const plantsSet = displayPlantsSet();
+console.log(plantsSet);
