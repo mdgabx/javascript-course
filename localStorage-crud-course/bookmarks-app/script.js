@@ -1,3 +1,11 @@
+const mainSection = document.getElementById("main-section");
+const formSection = document.getElementById("form-section");
+const addBookmarkBtn = document.getElementById("add-bookmark-button");
+const categoryName = document.querySelector(".category-name");
+const categoryDropdown = document.querySelector("#category-dropdown")
+const closeFormBtn = document.getElementById("close-form-button");
+const addBookmarkBtnForm = document.getElementById("add-bookmark-button-form");
+
 const isValidBookmark = (item) => {
     return (
         item !== null &&
@@ -19,5 +27,15 @@ const getBookmarks = () => {
 };
 
 const displayOrCloseForm = () => {
-  
+    mainSection.classList.toggle("hidden")
+    formSection.classList.toggle("hidden")
 }
+
+addBookmarkBtn.addEventListener("click", () => {
+    categoryName.innerText = categoryDropdown.value;
+    displayOrCloseForm()
+})
+
+closeFormBtn.addEventListener("click", () => {
+    displayOrCloseForm()
+})
