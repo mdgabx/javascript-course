@@ -68,11 +68,13 @@ addBookmarkBtnForm.addEventListener("click", () => {
 
 
 viewCategoryButton.addEventListener("click", () => {
+    categoryList.innerText = "";
+
     const bookmarks = getBookmarks();
     const selectedCategory = categoryDropdown.value
     const matches = bookmarks.filter((bookmark) => bookmark.category === selectedCategory)
 
-    if(matches.length === 0) {
+    if (matches.length === 0) {
         const noResultsMessage = document.createElement("p");
         noResultsMessage.innerHTML = "No Bookmarks Found"
         categoryList.appendChild(noResultsMessage);
@@ -80,4 +82,26 @@ viewCategoryButton.addEventListener("click", () => {
 
     bookMarkListSection.classList.toggle("hidden")
     mainSection.classList.toggle("hidden")
+
+
+    matches.forEach((bookmark) => {
+
+        const radioBtn = document.createElement("input");
+        radioBtn.id = bookmark.name;
+        radioBtn.value = bookmark.name;
+        radioBtn.type = "radio";
+        radioBtn.name = "bookmark";
+
+        const link = document.createElement("a");
+        link.href = bookmark.url
+        link.innerText = bookmark.name
+
+        const radioLabel = document.createElement("label");
+        radioLabel.setAttribute("for", bookmark.name);
+        radioLabel.appendChild(radioBtn);
+        radioLabel.appendChild(link);
+
+        categoryList.appendChild(radioLabel);
+
+    });
 })
