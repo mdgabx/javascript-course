@@ -29,7 +29,7 @@ class ProjectIdeaBoard {
   }
 
   pin(idea) {
-    this.idea.push(idea);
+    this.ideas.push(idea);
   }
 
   unpin(idea) {
@@ -41,12 +41,24 @@ class ProjectIdeaBoard {
   }
 
   formatToString() {
+    let result = '';
+    result += `${this.title} has ${this.count()} idea(s)\n`;
 
+    this.ideas.forEach((idea) => {
+      result += `${idea.title} (${idea.status.description}) - ${idea.description}\n`
+    })
+
+    return result;
   }
 }
 
 
 // pin
-const idea = new ProjectIdea("Smart Home System", "An integrated system to control lighting, temperature, and security devices remotely.");
+const sampleBoard = new ProjectIdeaBoard("Tech Projects Board");
 
-new ProjectIdeaBoard(id)
+const sampleIdea = new ProjectIdea("Smart Home System", "An integrated system to control lighting, temperature, and security devices remotely.")
+
+sampleBoard.pin(sampleIdea);
+
+const response = sampleBoard.formatToString()
+console.log(response);
