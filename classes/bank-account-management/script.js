@@ -7,4 +7,20 @@ class BankAccount {
   deposit(amount) {
 
   }
+
+  withdraw(amount) {
+
+  }
+
+  checkBalance() {
+
+  }
+
+  listAllDeposits () {
+
+  }
+
+  listAllWithdrawals () {
+    
+  }
 }
