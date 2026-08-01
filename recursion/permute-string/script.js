@@ -8,8 +8,6 @@ const permuteString = (word, prefix = "", result = []) => {
   }
 
   for (let i = 0; i < word.length; i++) {
-    // console.log("0 i: ", word.slice(0, i))
-    // console.log("remain: ", word.slice(i + 1))
     const remainingChars = word.slice(0, i) + word.slice(i + 1);
     permuteString(remainingChars, prefix + word[i], result)
   }
