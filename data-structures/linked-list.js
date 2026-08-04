@@ -48,7 +48,20 @@ function remove(list, element) {
     }
 
     list.length--;
-    
+}
+
+function contains(list, element) {
+  let current = list.head
+
+  while(current !== null) {
+    if(current.element === element) {
+      return true
+    }
+
+    current = current.next;
+  }
+
+  return false;
 }
 
 const myList = initList();
