@@ -17,13 +17,25 @@ function add(list, element) {
 
     if (isEmpty(list)) {
         list.head = node;
-    } 
+    } else {
+        let current = list.head;
+        while (current.next !== null) {
+            current = current.next;
+        }
+        current.next = node;
+    }
 
     list.length++;
+}
+
+function remove(list, element) {
+    
 }
 
 const myList = initList();
 console.log(isEmpty(myList));
 add(myList, 42);
+add(myList, 43);
+add(myList, 44);
 console.log(myList);
 console.log(isEmpty(myList));
