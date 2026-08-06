@@ -107,11 +107,28 @@ function insertAt(list, index, element) {
 }
 
 function removeAt(list, index) {
+  if(index < 0 || index >= list.length) return
 
+  if(index === 0) {
+    list.head = list.head.next;
+  } else {
+    let previous = list.head;
+    let count = 0;
+
+    while(count < index - 1) {
+      previous = previous.next;
+      count++;
+    }
+
+     previous.next = previous.next.next;
+  }
+
+  list.length--;
 }
 
 function clear(list) {
-
+  list.head = null;
+  list.length = 0;
 }
 
 const myList = initList();
@@ -119,7 +136,7 @@ add(myList, 42);
 add(myList, 43);
 add(myList, 44);
 //console.log(myList);
-// console.log(JSON.stringify(myList, null, 4))
+console.log(JSON.stringify(myList, null, 4))
 contains(myList, 54);
 // getAt(myList, 1);
 insertAt(myList, 1, 12);
