@@ -48,8 +48,8 @@ function remove(list, element) {
 function contains(list, element) {
   let current = list.head
 
-  while(current !== null) {
-    if(current.element === element) {
+  while (current !== null) {
+    if (current.element === element) {
       return true
     }
 
@@ -60,28 +60,54 @@ function contains(list, element) {
 }
 
 function getAt(list, index) {
- let current = list.head;
- let count = 0;
+  let current = list.head;
+  let count = 0;
 
- if(index < 0 || index >= list.length) {
-  return undefined;
- }
+  if (index < 0 || index >= list.length) {
+    return undefined;
+  }
 
- while(count < index) {
-  current = current.next;
-  count++;
- }
+  while (count < index) {
+    current = current.next;
+    count++;
+  }
 
- return current.element;
+  return current.element;
 }
 
 
 function insertAt(list, index, element) {
-  
+  if (index < 0 || index > list.length) {
+    return;
+  }
+
+  const node = {
+    element: element,
+    next: null
+  };
+
+  if (index === 0) {
+    node.next = list.head;
+    list.head = node;
+
+  } else {
+    let previous = list.head;
+    let count = 0;
+
+    while (count < index - 1) {
+      previous = previous.next;
+      count++;
+    }
+
+    node.next = previous.next;
+    previous.next = node;
+  }
+
+  list.length++;
 }
 
 function removeAt(list, index) {
- 
+
 }
 
 function clear(list) {
@@ -92,7 +118,11 @@ const myList = initList();
 add(myList, 42);
 add(myList, 43);
 add(myList, 44);
-// console.log(myList);
+//console.log(myList);
 // console.log(JSON.stringify(myList, null, 4))
-console.log(contains(myList, 54));
-console.log(getAt(myList, 1))
+contains(myList, 54);
+// getAt(myList, 1);
+insertAt(myList, 1, 12);
+insertAt(myList, 0, 22);
+
+
