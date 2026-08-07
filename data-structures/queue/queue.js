@@ -32,4 +32,7 @@ const myQueue = initQueue();
 enqueue(myQueue, "first");
 enqueue(myQueue, "second");
 dequeue(myQueue);
+size(myQueue);
+front(myQueue);
+isEmpty(myQueue);
 console.log(myQueue.collection); 
