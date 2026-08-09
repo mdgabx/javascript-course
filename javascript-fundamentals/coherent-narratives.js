@@ -36,4 +36,27 @@ const compactFragments = (fragments) => {
    return compacted;
 }
 
-console.log(compactFragments([{id: 1, text: "A Hare was making fun of the Tortoise one day for being so slow." }, undefined]))
+const sortFragments = (fragments) => {
+  const result = [...fragments];
+
+  for(let i = 1; i < result.length; i++) {
+    const current = result[i];
+    let j = i - 1;
+   // console.log(current);
+    // console.log(j)
+
+    while(j >= 0 && result[j].id > current.id) {
+      result[j + 1] = result[j];
+      j--;
+    }
+
+    result[j + 1] = current;
+  }
+
+  return result;
+}
+
+const compactedShuffledFragments = compactFragments(shuffledFragments);
+console.log(sortFragments(compactedShuffledFragments));
+
+// console.log(compactFragments([{id: 1, text: "A Hare was making fun of the Tortoise one day for being so slow." }, undefined]))
