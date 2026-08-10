@@ -42,6 +42,8 @@ const sortFragments = (fragments) => {
   for(let i = 1; i < result.length; i++) {
     const current = result[i];
     let j = i - 1;
+   // console.log(current);
+    // console.log(j)
 
     while(j >= 0 && result[j].id > current.id) {
       result[j + 1] = result[j];
@@ -61,12 +63,12 @@ const dedupeFragments = (fragments) => {
     if(seenIds.has(fragment.id)) {
       return false
     }
-    seenIds.push(fragment.id);
+    seenIds.add(fragment.id);
     return true;
   })
 }
 
 const compactedShuffledFragments = compactFragments(shuffledFragments);
-console.log(sortFragments(compactedShuffledFragments));
-
+const sortedFragments = sortFragments(compactedShuffledFragments);
+const dedupedFragments = dedupeFragments(sortedFragments);
 // console.log(compactFragments([{id: 1, text: "A Hare was making fun of the Tortoise one day for being so slow." }, undefined]))
