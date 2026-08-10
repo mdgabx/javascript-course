@@ -42,8 +42,6 @@ const sortFragments = (fragments) => {
   for(let i = 1; i < result.length; i++) {
     const current = result[i];
     let j = i - 1;
-   // console.log(current);
-    // console.log(j)
 
     while(j >= 0 && result[j].id > current.id) {
       result[j + 1] = result[j];
@@ -54,6 +52,18 @@ const sortFragments = (fragments) => {
   }
 
   return result;
+}
+
+const dedupeFragments = (fragments) => {
+  const seenIds = new Set();
+
+  return fragments.filter((fragment) => {
+    if(seenIds.has(fragment.id)) {
+      return false
+    }
+    seenIds.push(fragment.id);
+    return true;
+  })
 }
 
 const compactedShuffledFragments = compactFragments(shuffledFragments);
