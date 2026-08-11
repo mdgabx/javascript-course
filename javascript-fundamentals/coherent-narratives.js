@@ -42,8 +42,6 @@ const sortFragments = (fragments) => {
   for(let i = 1; i < result.length; i++) {
     const current = result[i];
     let j = i - 1;
-   // console.log(current);
-    // console.log(j)
 
     while(j >= 0 && result[j].id > current.id) {
       result[j + 1] = result[j];
@@ -61,6 +59,7 @@ const dedupeFragments = (fragments) => {
 
   return fragments.filter((fragment) => {
     if(seenIds.has(fragment.id)) {
+      console.log(`[DEDUPED] Removed duplicate fragment with id ${fragment.id}`);
       return false
     }
     seenIds.add(fragment.id);
@@ -68,7 +67,34 @@ const dedupeFragments = (fragments) => {
   })
 }
 
+const fillMissingFragments = (fragments) => {
+  if(fragments.length === 0) return [];
+
+  const result = [];
+  const minId = fragments[0].id
+  const maxId = fragments[fragments.length - 1].id;
+
+  let fragmentIndex = 0;
+
+  for(let id = minId; id <= maxId; id++) {
+    if(fragmentIndex < fragments.length && fragments[fragmentIndex].id === id) {
+      // existing id push to the result
+      result.push(fragments[fragmentIndex])
+      fragmentIndex++;
+    } else {
+      // non existing id need to add
+      result.push({ id, text: "[...]"})
+      console.log("[FILLED] placeholder added");
+    }
+  }
+  
+  return result;
+}
+
 const compactedShuffledFragments = compactFragments(shuffledFragments);
 const sortedFragments = sortFragments(compactedShuffledFragments);
 const dedupedFragments = dedupeFragments(sortedFragments);
+const filledFragments = fillMissingFragments([{ id: 1, text: "a" }, { id: 3, text: "c" }]);
+
+
 // console.log(compactFragments([{id: 1, text: "A Hare was making fun of the Tortoise one day for being so slow." }, undefined]))
