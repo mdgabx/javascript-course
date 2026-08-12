@@ -91,10 +91,16 @@ const fillMissingFragments = (fragments) => {
   return result;
 }
 
+const assembleStory = (fragments) => {
+  if(fragments.length === 0) return "";
+
+  const assembled = fragments.map((fragment) => fragment.text).join("\n")
+  return assembled;
+}
+
+
 const compactedShuffledFragments = compactFragments(shuffledFragments);
 const sortedFragments = sortFragments(compactedShuffledFragments);
 const dedupedFragments = dedupeFragments(sortedFragments);
-const filledFragments = fillMissingFragments([{ id: 1, text: "a" }, { id: 3, text: "c" }]);
-
-
-// console.log(compactFragments([{id: 1, text: "A Hare was making fun of the Tortoise one day for being so slow." }, undefined]))
+const filledFragments = fillMissingFragments(dedupedFragments);
+console.log(assembleStory(filledFragments))
