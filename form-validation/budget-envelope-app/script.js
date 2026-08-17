@@ -30,5 +30,7 @@ function addEntry() {
     min="0" 
     id="${category}-${entryNumber}-amount" placeholder="Amount" 
     />`;
-  
+    targetInputContainer.innerHTML += HTMLString;
 }
+
+addEntryButton.addEventListener("click", addEntry);
