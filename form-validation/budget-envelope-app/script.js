@@ -33,7 +33,45 @@ function addEntry() {
     targetInputContainer.insertAdjacentHTML('beforeend', HTMLString);
 }
 
-function calculateBudget() {
+function calculateBudget(e) {
+  e.preventDefault();
+  isError = false;
+
+  const foodInputs = document.querySelectorAll("#food input[type='number']");
+  const utilitiesInputs = document.querySelectorAll("#utilities input[type='number']");
+  const entertainmentInputs = document.querySelectorAll("#entertainment input[type='number']");
+
+  const rent = getTotalFromInputs([rentInput]);
+  const food = getTotalFromInputs(foodInputs);
+  const utilities = getTotalFromInputs(utilitiesInputs);
+  const entertainment = getTotalFromInputs(entertainmentInputs);
+  const income = getTotalFromInputs([incomeInput]);
+
+  if (isError) {
+    return;
+  }
+
+  const expenses = rent + food + utilities + entertainment;
+  const netRemaining = income - expenses;
+
+  let statusText = "";
+  let statusClass = "";
+  
+  if (netRemaining < 0) {
+    statusText = `Over Budget by $${Math.abs(netRemaining)}`;
+    statusClass = "deficit";
+  } else {
+    statusText = `$${netRemaining} Remaining`;
+    statusClass = "surplus";
+  }
+
+  output.innerHTML = `
+    <span class="${statusClass}">${statusText}</span>
+    <hr>
+    <p>$${income} Total Income</p>
+    <p>$${expenses} Total Expenses</p>
+  `;
+  
   
 }
 
