@@ -12,12 +12,21 @@ function adjacencyListToMatrix (adjList) {
 
   const nodeIndex = {};
   nodes.forEach((node, index) => {
-    console.log(node, index)
-    nodes[node] = index;
+    nodeIndex[node] = index;
   })
 
-  console.log(nodes);
-  
+   console.log(nodeIndex)
+
+  //create matrix array with 0 values based on nodes length
+  const matrix = Array.from({ length: n }, () => new Array(n).fill(0))
+
+  for(let node of nodes) {
+    const row = nodeIndex[node];
+
+    console.log("row: ", row);
+    for(let col of adj)
+   
+  }
 }
 
 adjacencyListToMatrix(adjList)
