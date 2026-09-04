@@ -15,7 +15,7 @@ function adjacencyListToMatrix (adjList) {
     nodeIndex[node] = index;
   })
 
-   console.log(nodeIndex)
+  //  console.log(nodeIndex)
 
   //create matrix array with 0 values based on nodes length
   const matrix = Array.from({ length: n }, () => new Array(n).fill(0))
@@ -23,10 +23,22 @@ function adjacencyListToMatrix (adjList) {
   for(let node of nodes) {
     const row = nodeIndex[node];
 
-    console.log("row: ", row);
-    for(let col of adj)
-   
+    // console.log("row: ", row);
+    for(const neighbor of adjList[node]) {
+      // console.log("neighbor: ", neighbor);
+      const col = nodeIndex[neighbor];
+      matrix[row][col] = 1;
+    }
   }
+
+    // print each row of the matrix separately
+  for (const row of matrix) {
+    console.log(row);
+  }
+
+
+  // console.log(matrix)
+  return matrix;
 }
 
 adjacencyListToMatrix(adjList)
