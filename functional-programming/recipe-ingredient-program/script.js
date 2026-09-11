@@ -11,4 +11,19 @@ const convertQuantity = (fromUnit) => (toUnit) => (quantity) => {
 };
 
 const gramsResult = convertQuantity("cup")("gram")(2);
-console.log(gramsResult) 
+console.log(gramsResult);
+
+const adjustForServings = (baseQuantity) => (newServings) =>
+  baseQuantity * newServings;
+
+const servingsResult = adjustForServings(4)(6);
+console.log(servingsResult);
+
+const processIngredient = (baseQuantity, baseUnit, newUnit, newServings) => {
+  const servingsResult = adjustForServings(baseQuantity)(newServings)
+  const conversionResult = convertQuantity(baseUnit)(newUnit)(servingsResult);
+
+  return conversionResult.toFixed(2);
+}
+
+console.log(processIngredient(4, "cup", "gram", 6))
