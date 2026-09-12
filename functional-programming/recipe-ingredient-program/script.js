@@ -11,19 +11,46 @@ const convertQuantity = (fromUnit) => (toUnit) => (quantity) => {
 };
 
 const gramsResult = convertQuantity("cup")("gram")(2);
-console.log(gramsResult);
+// console.log(gramsResult);
 
 const adjustForServings = (baseQuantity) => (newServings) =>
   baseQuantity * newServings;
 
 const servingsResult = adjustForServings(4)(6);
-console.log(servingsResult);
+// console.log(servingsResult);
 
 const processIngredient = (baseQuantity, baseUnit, newUnit, newServings) => {
-  const servingsResult = adjustForServings(baseQuantity)(newServings)
-  const conversionResult = convertQuantity(baseUnit)(newUnit)(servingsResult);
+  const adjustedQuantity = adjustForServings(baseQuantity)(newServings);
+  const convertedQuantity =
+    convertQuantity(baseUnit)(newUnit)(adjustedQuantity);
+  return convertedQuantity.toFixed(2);
+};
 
-  return conversionResult.toFixed(2);
-}
+const ingredientName = document.getElementById("ingredient");
+const ingredientQuantity = document.getElementById("quantity");
+const unitToConvert = document.getElementById("unit");
+const numberOfServings = document.getElementById("servings");
+const recipeForm = document.getElementById("recipe-form");
+const resultList = document.getElementById("result-list");
 
-console.log(processIngredient(4, "cup", "gram", 6))
+const units = ["cup", "gram", "ounce", "teaspoon"];
+
+const updateResultsList = () => {
+  resultList.innerHTML = "";
+  const adjustServings = adjustForServings(Number(ingredientQuantity.value))(Number(numberOfServings.value))
+
+  units.forEach((unit) => {
+    if (unit !== unitToConvert.value) {
+      const convertedQuantity = convertQuantity(unitToConvert.value)(unit)(adjustServings)
+
+      let listItem = document.createElement("li");
+      listItem.textContent = `${ingredientName.value}: ${convertedQuantity.toFixed(2)} ${unit}`;
+      resultList.appendChild(listItem);
+    }
+  })
+};
+
+recipeForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  updateResultsList();
+});
