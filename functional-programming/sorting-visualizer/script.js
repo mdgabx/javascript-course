@@ -15,3 +15,15 @@ const generateArray = () => {
   return randomArray
 }
 
+const generateContainer = () => {
+  return document.createElement("div")
+}
+
+const fillArrContainer = (element, integers) => {
+  integers.forEach((integer) => {
+    const newSpan = document.createElement("span");
+    newSpan.textContent = integer;
+    element.appendChild(newSpan);
+  });
+}
+
