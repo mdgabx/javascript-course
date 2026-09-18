@@ -40,5 +40,29 @@ const swapElements = (integers, index) => {
 }
 
 
+const highlightCurrentEls = (element, index) => {
+  const children = element.children;
+  const firstEl = children[index];
+  const secondEl = children[index + 1];
+
+  firstEl.style.border = "2px dashed red";
+  secondEl.style.border = "2px dashed red";
+}
+
+const generateBtn = document.getElementById("generate-btn");
+const startingArray = document.getElementById("starting-array");
+
+generateBtn.addEventListener("click", () => {
+  const parentContainer =  generateContainer();
+  const startingNumbers = generateArray();
+
+  console.log(parentContainer, startingNumbers)
+
+  //fill the array under the parent container
+  fillArrContainer(parentContainer, startingNumbers)
+
+  startingArray.innerHTML = "";
+  startingArray.appendChild(parentContainer);
 
 
+})
