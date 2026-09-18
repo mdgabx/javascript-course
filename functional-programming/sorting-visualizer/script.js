@@ -51,18 +51,23 @@ const highlightCurrentEls = (element, index) => {
 
 const generateBtn = document.getElementById("generate-btn");
 const startingArray = document.getElementById("starting-array");
+const sortBtn = document.getElementById("sort-btn");
+const arrayContainer = document.getElementById("array-container");
+
+let currentArray = [];
 
 generateBtn.addEventListener("click", () => {
   const parentContainer =  generateContainer();
-  const startingNumbers = generateArray();
-
-  console.log(parentContainer, startingNumbers)
-
-  //fill the array under the parent container
-  fillArrContainer(parentContainer, startingNumbers)
+  currentArray = generateArray();
+ 
+  fillArrContainer(parentContainer, currentArray)
 
   startingArray.innerHTML = "";
   startingArray.appendChild(parentContainer);
-
-
 })
+
+sortBtn.addEventListener("click", () => {
+  // arrayContainer = generateContainer();
+  console.log(currentArray)
+})
+
