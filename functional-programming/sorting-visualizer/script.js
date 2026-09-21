@@ -101,6 +101,8 @@ sortBtn.addEventListener("click", () => {
       renderStep([...currentArray]); // snapshot after each swap
     }
   }
-});
 
+  // ✅ Ensure the final sorted array is rendered
+  renderStep([...currentArray]);
+});
 
