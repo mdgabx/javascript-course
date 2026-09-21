@@ -39,7 +39,6 @@ const swapElements = (integers, index) => {
   }
 }
 
-
 const highlightCurrentEls = (element, index) => {
   const children = element.children;
   const firstEl = children[index];
@@ -57,17 +56,51 @@ const arrayContainer = document.getElementById("array-container");
 let currentArray = [];
 
 generateBtn.addEventListener("click", () => {
-  const parentContainer =  generateContainer();
-  currentArray = generateArray();
- 
-  fillArrContainer(parentContainer, currentArray)
+  // Clear out all children of array-container except starting-array
+  Array.from(arrayContainer.children).forEach((child) => {
+    if (child.id !== "starting-array") {
+      child.remove();
+    }
+  });
 
+  // Generate a new array
+  currentArray = generateArray();
+
+  // Create a fresh container for the starting array
+  const parentContainer = generateContainer();
+  fillArrContainer(parentContainer, currentArray);
+
+  // Reset starting-array to only show the new numbers
   startingArray.innerHTML = "";
   startingArray.appendChild(parentContainer);
-})
+});
+
+
+const renderStep = (integers) => {
+  const stepContainer = generateContainer();
+  fillArrContainer(stepContainer, integers);
+  arrayContainer.appendChild(stepContainer);
+}
+
 
 sortBtn.addEventListener("click", () => {
-  // arrayContainer = generateContainer();
-  console.log(currentArray)
-})
+  // Remove all children except starting-array
+  Array.from(arrayContainer.children).forEach((child) => {
+    if (child.id !== "starting-array") {
+      child.remove();
+    }
+  });
+
+  // Render the starting array as the first step
+  renderStep([...currentArray]);
+
+  // Bubble Sort visualization
+  for (let i = 0; i < currentArray.length - 1; i++) {
+    for (let j = 0; j < currentArray.length - 1 - i; j++) {
+      swapElements(currentArray, j);
+      renderStep([...currentArray]); // snapshot after each swap
+    }
+  }
+});
+
 
