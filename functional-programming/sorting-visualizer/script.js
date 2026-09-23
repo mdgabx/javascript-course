@@ -102,7 +102,6 @@ sortBtn.addEventListener("click", () => {
     }
   }
 
-  // ✅ Ensure the final sorted array is rendered
   renderStep([...currentArray]);
 });
 
