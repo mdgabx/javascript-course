@@ -6,17 +6,19 @@ const equipmentLedger = {
 };
 
 const checkoutDevice = (ledger, assetTag, borrower) => {
-  const cloneLedger = JSON.parse(JSON.stringify(ledger)); // cloning the equipment ledger
+  const cloneLedger = JSON.parse(JSON.stringify(ledger));
 
   let confirmationString = "";
 
-  if (cloneLedger[assetTag]) {
+  if (cloneLedger[assetTag] && cloneLedger[assetTag]["status"] !== "CheckedOut") {
     cloneLedger[assetTag]["borrower"] = borrower;
     cloneLedger[assetTag]["status"] = "CheckedOut";
 
-    // setting the confirmation message
     confirmationString = `${borrower["name"]} has checkout ${assetTag}`;
-  } else {
+  } else if (cloneLedger[assetTag] && cloneLedger[assetTag]["status"] === "CheckedOut") {
+    confirmationString = `${assetTag} has checked out`;
+  } 
+  else {
     confirmationString = `${assetTag} is not found`;
   }
 
@@ -24,6 +26,27 @@ const checkoutDevice = (ledger, assetTag, borrower) => {
     ledger: cloneLedger,
     message: confirmationString
   }
+}
+
+
+const result = checkoutDevice(equipmentLedger, "2", { name: "Mark", email: "wdbsamode@gmail.com" });
+
+console.log(result);
+
+const checkinDevice = () => {
+
+}
+
+const listOverdueDevices = () => {
+
+}
+
+const serializeLedger = () => {
+
+}
+
+const loadLedger = () => {
+
 }
 
 
