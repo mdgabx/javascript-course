@@ -1,107 +1,97 @@
-const generateElement = () => {
-  return Math.floor((Math.random() * 100) + 1);
+let currentArray = []
+
+function generateElement() {
+  return Math.floor(Math.random() * 100) + 1
 }
 
-const generateArray = () => {
-  const randomArray = [];
-  let index = 0;
-
-  while (index < 5) {
-    const randomInteger = generateElement();
-    randomArray.push(randomInteger)
-    index++;
+function generateArray() {
+  const arr = []
+  for (let i = 0; i < 5; i++) {
+    arr.push(generateElement())
   }
-
-  return randomArray
+  return arr
 }
 
-const generateContainer = () => {
+function generateContainer() {
   return document.createElement("div")
 }
 
-const fillArrContainer = (element, integers) => {
-  integers.forEach((integer) => {
-    const newSpan = document.createElement("span");
-    newSpan.textContent = integer;
-    element.appendChild(newSpan);
-  });
+function fillArrContainer(container, arr) {
+  container.innerHTML = "" // Clear existing content
+  arr.forEach((num) => {
+    const span = document.createElement("span")
+    span.textContent = num
+    container.appendChild(span)
+  })
 }
 
-const isOrdered = (a, b) => {
-  return a <= b ? true : false;
+function isOrdered(a, b) {
+  return a <= b
 }
 
-const swapElements = (integers, index) => {
-  if (!isOrdered(integers[index], integers[index + 1])) {
-    const temp = integers[index];
-    integers[index] = integers[index + 1];
-    integers[index + 1] = temp;
+function swapElements(arr, index) {
+  if (!isOrdered(arr[index], arr[index + 1])) {
+    const temp = arr[index]
+    arr[index] = arr[index + 1]
+    arr[index + 1] = temp
   }
 }
 
-const highlightCurrentEls = (element, index) => {
-  const children = element.children;
-  const firstEl = children[index];
-  const secondEl = children[index + 1];
-
-  firstEl.style.border = "2px dashed red";
-  secondEl.style.border = "2px dashed red";
+function highlightCurrentEls(container, index) {
+  const children = container.children
+  if (index < children.length) {
+    children[index].style.border = "2px dashed red"
+  }
+  if (index + 1 < children.length) {
+    children[index + 1].style.border = "2px dashed red"
+  }
 }
 
-const generateBtn = document.getElementById("generate-btn");
-const startingArray = document.getElementById("starting-array");
-const sortBtn = document.getElementById("sort-btn");
-const arrayContainer = document.getElementById("array-container");
+document.getElementById("generate-btn").addEventListener("click", () => {
+  const arrayContainer = document.getElementById("array-container")
+  arrayContainer.innerHTML = ""
 
-let currentArray = [];
+  const startingArrayDiv = document.createElement("div")
+  startingArrayDiv.id = "starting-array"
+  arrayContainer.appendChild(startingArrayDiv)
 
-generateBtn.addEventListener("click", () => {
-  // Clear out all children of array-container except starting-array
-  Array.from(arrayContainer.children).forEach((child) => {
-    if (child.id !== "starting-array") {
-      child.remove();
-    }
-  });
+  currentArray = generateArray()
+  fillArrContainer(startingArrayDiv, currentArray)
+})
 
-  // Generate a new array
-  currentArray = generateArray();
+document.getElementById("sort-btn").addEventListener("click", () => {
+  if (currentArray.length === 0) return
+  const arrayContainer = document.getElementById("array-container")
 
-  // Create a fresh container for the starting array
-  const parentContainer = generateContainer();
-  fillArrContainer(parentContainer, currentArray);
+  const startingArrayDiv = document.getElementById("starting-array")
+  fillArrContainer(startingArrayDiv, currentArray)
+  highlightCurrentEls(startingArrayDiv, 0)
 
-  // Reset starting-array to only show the new numbers
-  startingArray.innerHTML = "";
-  startingArray.appendChild(parentContainer);
-});
+  const arr = currentArray.slice()
+  const n = arr.length
+  let comparisonCount = 0
 
-
-const renderStep = (integers) => {
-  const stepContainer = generateContainer();
-  fillArrContainer(stepContainer, integers);
-  arrayContainer.appendChild(stepContainer);
-}
-
-
-sortBtn.addEventListener("click", () => {
-  // Remove all children except starting-array
-  Array.from(arrayContainer.children).forEach((child) => {
-    if (child.id !== "starting-array") {
-      child.remove();
-    }
-  });
-
-  // Render the starting array as the first step
-  renderStep([...currentArray]);
-
-  // Bubble Sort visualization
-  for (let i = 0; i < currentArray.length - 1; i++) {
-    for (let j = 0; j < currentArray.length - 1 - i; j++) {
-      swapElements(currentArray, j);
-      renderStep([...currentArray]); // snapshot after each swap
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      comparisonCount++
+      if (comparisonCount === 1) {
+        if (!isOrdered(arr[j], arr[j + 1])) {
+          swapElements(arr, j)
+        }
+      } else {
+        const stepContainer = generateContainer()
+        fillArrContainer(stepContainer, arr)
+        highlightCurrentEls(stepContainer, j)
+        arrayContainer.appendChild(stepContainer)
+        if (!isOrdered(arr[j], arr[j + 1])) {
+          swapElements(arr, j)
+        }
+      }
     }
   }
 
-  renderStep([...currentArray]);
-});
-
+  const finalContainer = generateContainer()
+  fillArrContainer(finalContainer, arr)
+  arrayContainer.appendChild(finalContainer)
+  highlightCurrentEls(finalContainer, n - 2)
+})
