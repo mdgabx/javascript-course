@@ -5,8 +5,44 @@ const equipmentLedger = {
   "4": { type: "iPad", status: "CheckedIn", borrower: { name: "", email: "" }, dueDate: "" }
 };
 
+// Splits a "month/day/year" string (zero-padding optional) into numbers.
+// No Date object used anywhere.
+const parseDateParts = (dateStr) => {
+  const [month, day, year] = dateStr.split("/").map(Number);
+  return { year, month, day };
+};
+
+// Returns negative if dateStrA is before dateStrB, positive if after,
+// 0 if equal. Works directly as an Array.prototype.sort comparator.
+const compareDates = (dateStrA, dateStrB) => {
+  const a = parseDateParts(dateStrA);
+  const b = parseDateParts(dateStrB);
+
+  if (a.year !== b.year) return a.year - b.year;
+  if (a.month !== b.month) return a.month - b.month;
+  return a.day - b.day;
+};
+
+const listOverdueDevices = (ledger, today) => {
+  return Object.values(ledger)
+    .filter(
+      (device) =>
+        device.status === "CheckedOut" &&
+        compareDates(device.dueDate, today) < 0
+    )
+    .sort((a, b) => compareDates(a.dueDate, b.dueDate));
+};
+
+const serializeLedger = (ledger) => {
+  return JSON.stringify(ledger);
+};
+
+const loadLedger = (jsonString) => {
+  return JSON.parse(jsonString);
+};
+
 const checkoutDevice = (ledger, assetTag, borrower) => {
-  const cloneLedger = JSON.parse(JSON.stringify(ledger));
+  const cloneLedger = loadLedger(serializeLedger(ledger));
 
   let confirmationString = "";
 
@@ -17,7 +53,7 @@ const checkoutDevice = (ledger, assetTag, borrower) => {
     confirmationString = `${borrower["name"]} has checkout ${assetTag}`;
   } else if (cloneLedger[assetTag] && cloneLedger[assetTag]["status"] === "CheckedOut") {
     confirmationString = `${assetTag} has checked out`;
-  } 
+  }
   else {
     confirmationString = `${assetTag} is not found`;
   }
@@ -29,7 +65,7 @@ const checkoutDevice = (ledger, assetTag, borrower) => {
 }
 
 const checkinDevice = (ledger, assetTag) => {
-  const cloneLedger = JSON.parse(JSON.stringify(ledger));
+  const cloneLedger = loadLedger(serializeLedger(ledger));
 
   let confirmationString = "";
 
@@ -49,18 +85,3 @@ const checkinDevice = (ledger, assetTag) => {
     message: confirmationString
   }
 }
-
-
-const listOverdueDevices = () => {
-
-}
-
-const serializeLedger = () => {
-
-}
-
-const loadLedger = () => {
-
-}
-
-
