@@ -28,14 +28,28 @@ const checkoutDevice = (ledger, assetTag, borrower) => {
   }
 }
 
+const checkinDevice = (ledger, assetTag) => {
+  const cloneLedger = JSON.parse(JSON.stringify(ledger));
 
-const result = checkoutDevice(equipmentLedger, "2", { name: "Mark", email: "wdbsamode@gmail.com" });
+  let confirmationString = "";
 
-console.log(result);
+  if(!cloneLedger[assetTag]) {
+    confirmationString = `${assetTag} is not found`;
+  } else {
+    cloneLedger[assetTag]["borrower"]["name"] = "";
+    cloneLedger[assetTag]["borrower"]["email"] = "";
+    cloneLedger[assetTag]["dueDate"] = "";
+    cloneLedger[assetTag]["status"] = "CheckedIn";
 
-const checkinDevice = () => {
+    confirmationString = `${assetTag} has check in`;
+  }
 
+  return {
+    ledger: cloneLedger,
+    message: confirmationString
+  }
 }
+
 
 const listOverdueDevices = () => {
 
