@@ -19,7 +19,7 @@ const timeAgo = (timestamp) => {
   const now = new Date();
   const past = new Date(timestamp)
 
-  const difference  = now - past;
+  const difference = now - past;
 
   const minutes = Math.floor(difference / (1000 * 60));
   const hours = Math.floor(difference / (1000 * 60 * 60));
@@ -39,12 +39,27 @@ const timeAgo = (timestamp) => {
 
 
 const viewCount = (views) => {
-  if(views < 1000) {
+  if (views < 1000) {
     return views
   }
 
   return `${Math.floor(views / 1000)}k`
-
 }
 
-console.log(viewCount(2730));
+const forumCategory = (id) => {
+  const { category = "General", className = "general" } = allCategories[id] || {};
+
+  return `<a class="category ${className}" href="${forumCategoryUrl}${className}/${id}">${category}</a>`;
+};
+
+const avatars = (posters, users) => {
+  return posters
+    .map((poster) => {
+      const user = users.find((user) => user.id === poster.user_id);
+
+      const avatarUrl = user.avatar_template.replace("{size}", "30");
+
+      return `<img size=src="${avatarUrl}" alt="${user.name}">`;
+    })
+    .join("");
+};
