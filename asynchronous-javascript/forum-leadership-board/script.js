@@ -15,6 +15,11 @@ const allCategories = {
   560: { category: 'Back-End Development', className: 'backend' }
 };
 
+// elements
+const postsContainer = document.getElementById("posts-container");
+
+
+
 const timeAgo = (timestamp) => {
   const now = new Date();
   const past = new Date(timestamp)
@@ -57,9 +62,40 @@ const avatars = (posters, users) => {
     .map((poster) => {
       const user = users.find((user) => user.id === poster.user_id);
 
-      const avatarUrl = user.avatar_template.replace("{size}", "30");
+      const avatar = user.avatar_template.replace("{size}", "30");
 
-      return `<img size=src="${avatarUrl}" alt="${user.name}">`;
+      if(!avatar.startsWith("/")) {
+         avatar = "/" + avatar;
+      }
+
+      return `<img src="${avatarUrl}${avatar}" alt="${user.name}">`;
     })
     .join("");
 };
+
+const showLatestPosts = (data) => {
+  const { users, topic_list } = data;
+  const { id, title, views, posts_count, slug, posters, category_id, bumped_at} = topic_list;
+
+  postsContainer.innerHTML = ``
+
+}
+
+const fetchData = () => {
+
+}
+
+console.log(avatars([{ "user_id": 6 }], [{
+  "id": 6,
+  "username": "QuincyLarson",
+  "name": "Quincy Larson",
+  "avatar_template": "/user_avatar/QuincyLarson_{size}.png"
+},
+{
+  "id": 576147,
+  "username": "JOY-OKORO",
+  "name": "Joy Okoro",
+  "avatar_template": "/user_avatar/JOY-OKORO_{size}.png"
+}]))
+
+
