@@ -64,8 +64,8 @@ const avatars = (posters, users) => {
 
       const avatar = user.avatar_template.replace("{size}", "30");
 
-      if(!avatar.startsWith("/")) {
-         avatar = "/" + avatar;
+      if (!avatar.startsWith("/")) {
+        avatar = "/" + avatar;
       }
 
       return `<img src="${avatarUrl}${avatar}" alt="${user.name}">`;
@@ -74,28 +74,37 @@ const avatars = (posters, users) => {
 };
 
 const showLatestPosts = (data) => {
-  const { users, topic_list } = data;
-  const { id, title, views, posts_count, slug, posters, category_id, bumped_at} = topic_list;
+  const { users, topic_list } = data
+  const topics = topic_list.topics;
 
-  postsContainer.innerHTML = ``
-
+  return topics.map(({ id, title, views, posts_count, slug, posters, category_id, bumped_at }) => 
+  postsContainer.innerHTML += `<tr>
+    <td>
+      <a class="post-title" href="${forumTopicUrl}${slug}/${id}">${title}</a>
+      ${forumCategory(category_id)}"
+    </td>
+    <td>
+      <div class="avatar-container">${avatars(posters, users)}</div>
+    </td>
+    <td>${posts_count - 1}</td>
+    <td>${views}</td>
+    <td>${timeAgo(bumped_at)}</td>
+  </tr>`);
 }
 
-const fetchData = () => {
+const fetchData = async () => {
+  try {
+    const res = await fetch(forumLatest);
+    const data = await res.json()
 
+    showLatestPosts(data);
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-console.log(avatars([{ "user_id": 6 }], [{
-  "id": 6,
-  "username": "QuincyLarson",
-  "name": "Quincy Larson",
-  "avatar_template": "/user_avatar/QuincyLarson_{size}.png"
-},
-{
-  "id": 576147,
-  "username": "JOY-OKORO",
-  "name": "Joy Okoro",
-  "avatar_template": "/user_avatar/JOY-OKORO_{size}.png"
-}]))
+fetchData();
+
+
 
 
