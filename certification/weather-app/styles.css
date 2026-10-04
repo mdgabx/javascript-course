@@ -1,0 +1,12 @@
+body{
+ width: 100%;
+ height: 100vh;
+ background-color: #444; 
+}
+
+#weather-info {
+  width: 100%;
+  background: #fff;
+  height: 200px;
+}
+
