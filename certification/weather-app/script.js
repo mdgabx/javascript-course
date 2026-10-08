@@ -48,7 +48,7 @@ async function showWeather(city) {
   const weatherMain = document.getElementById("weather-main")
   const location = document.getElementById("location")
 
-  console.log(weather);
+
   imageIcon.src = weather["weather"][0].icon;
 
   const mainTemperatureSpan = document.createElement("span");
@@ -63,6 +63,20 @@ async function showWeather(city) {
   humiditySpan.textContent = weather["main"]["humidity"]
   humidity.appendChild(humiditySpan);
 
-  
+  const windSpan = document.createElement("span");
+  windSpan.textContent = weather["wind"]["speed"]
+  wind.appendChild(windSpan)
+
+  const windGustSpan = document.createElement("span");
+  windGustSpan.textContent = weather["wind"]["gust"]
+  windGust.appendChild(windGustSpan)
+
+  const weatherMainSpan = document.createElement("span");
+  weatherMainSpan.textContent = weather["weather"][0]["main"];
+  weatherMain.appendChild(weatherMainSpan)
+
+  const locationSpan = document.createElement("span");
+  locationSpan.textContent = `${weather["coord"]["lon"]} - ${weather["coord"]["lat"]}`
+  location.appendChild(locationSpan)
 }
 
