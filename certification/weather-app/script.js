@@ -9,6 +9,8 @@ searchBtn.addEventListener("click", async () => {
     return;
   }
 
+  // document.getElementById("weather-info-wrap")?.remove();
+
   weatherDashboard.innerHTML = `<div id="weather-info">
     <img id="weather-icon" />
     <div id="main-temperature"></div>
@@ -37,46 +39,28 @@ async function getWeather(city) {
 async function showWeather(city) {
   const weather = await getWeather(city);
 
+  if (!weather || weather.error) {
+    alert("Something went wrong, please try again later");
+    return;
+  }
 
+  const imageIcon = document.getElementById("weather-icon")
+  const icon = weather?.weather?.[0]?.icon;
 
-  const imageIcon = document.getElementById("weather-icon");
-  const mainTemperature = document.getElementById("main-temperature")
-  const feelsLike = document.getElementById("feels-like")
-  const humidity = document.getElementById("humidity")
-  const wind = document.getElementById("wind")
-  const windGust = document.getElementById("wind-gust")
-  const weatherMain = document.getElementById("weather-main")
-  const location = document.getElementById("location")
+  if (icon !== undefined) {
+    imageIcon.src = icon;
+  }
 
+  document.getElementById("main-temperature").textContent = displayValues(weather?.main?.temp);
+  document.getElementById("feels-like").textContent = displayValues(weather?.main?.feels_like);
+  document.getElementById("humidity").textContent = displayValues(weather?.main?.humidity)
+  document.getElementById("wind").textContent = displayValues(weather?.wind?.speed)
+  document.getElementById("wind-gust").textContent = displayValues(weather?.wind?.gust)
+  document.getElementById("weather-main").textContent = displayValues(weather?.weather?.[0]?.main);
+  document.getElementById("location").textContent = displayValues(weather?.name);
+}
 
-  imageIcon.src = weather["weather"][0].icon;
-
-  const mainTemperatureSpan = document.createElement("span");
-  mainTemperatureSpan.textContent = weather["main"]["temp"];
-  mainTemperature.appendChild(mainTemperatureSpan);
-
-  const feelsLikeSpan = document.createElement("span");
-  feelsLikeSpan.textContent = weather["main"]["feels_like"];
-  feelsLike.appendChild(feelsLikeSpan);
-
-  const humiditySpan = document.createElement("span");
-  humiditySpan.textContent = weather["main"]["humidity"]
-  humidity.appendChild(humiditySpan);
-
-  const windSpan = document.createElement("span");
-  windSpan.textContent = weather["wind"]["speed"]
-  wind.appendChild(windSpan)
-
-  const windGustSpan = document.createElement("span");
-  windGustSpan.textContent = weather["wind"]["gust"]
-  windGust.appendChild(windGustSpan)
-
-  const weatherMainSpan = document.createElement("span");
-  weatherMainSpan.textContent = weather["weather"][0]["main"];
-  weatherMain.appendChild(weatherMainSpan)
-
-  const locationSpan = document.createElement("span");
-  locationSpan.textContent = `${weather["coord"]["lon"]} - ${weather["coord"]["lat"]}`
-  location.appendChild(locationSpan)
+const displayValues = (data) => {
+  return data === undefined ? 'N/A' : data;;
 }
 
